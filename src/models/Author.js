@@ -1,12 +1,12 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../database/database.js';
 
-export const author = sequelize.define('author', {
+export const Author = sequelize.define('author', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
-        autoIncrement: true
+        autoIncrement: true,
     },
     name:{
         type: DataTypes.STRING,
@@ -14,4 +14,4 @@ export const author = sequelize.define('author', {
     lastname:{
         type: DataTypes.STRING,
     }
-})
+});

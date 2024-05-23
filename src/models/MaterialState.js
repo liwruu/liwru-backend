@@ -1,14 +1,13 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 
-export const Editorial = sequelize.define('editorial', {
+export const MaterialState = sequelize.define( 'materialState', {
     id:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.CHAR,
         primaryKey: true,
         allowNull: false,
-        autoIncrement: true,
     },
-    name:{
+    description:{
         type: DataTypes.STRING,
     }
 },{
