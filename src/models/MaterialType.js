@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../database/database.js';
 
-export const MaterialType = sequelize.define('materialtype', {
+export const MaterialType = sequelize.define('materialType', {
     id:{
         type: DataTypes.STRING,
         primaryKey: true,
@@ -10,4 +10,6 @@ export const MaterialType = sequelize.define('materialtype', {
     description:{
         type: DataTypes.STRING,
     }
-})
+},{
+    timestamps: true,
+});
