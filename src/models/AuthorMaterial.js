@@ -13,3 +13,6 @@ export const AuthorMaterial = sequelize.define('authorMaterial', {
 },{
     timestamps: true,
 });
+
+Author.belongsToMany(BibliographicMaterial, { through: AuthorMaterial });
+BibliographicMaterial.belongsToMany(Author, { through: AuthorMaterial });
