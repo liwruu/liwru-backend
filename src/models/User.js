@@ -4,11 +4,14 @@ import { Loan } from "./Loan.js";
 
 export const User = sequelize.define('User', {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       primaryKey: true,
-      autoIncrement: true,
     },
     name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lastnmae: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -24,10 +27,12 @@ export const User = sequelize.define('User', {
     rol: {
       type: DataTypes.STRING,
       allowNull: false,
+      defaultValue: "USER",
     },
     status: {
       type: DataTypes.STRING,
       allowNull: false,
+      defaultValue: "Active",
     },
 });
 

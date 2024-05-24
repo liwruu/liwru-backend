@@ -16,6 +16,7 @@ export const BibliographicMaterial = sequelize.define('bibliographicMaterial', {
     },
     isbn:{
         type: DataTypes.INTEGER,
+        unique: true,
     },
     pages:{
         type: DataTypes.INTEGER,
