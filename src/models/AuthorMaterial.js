@@ -1,7 +1,7 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../database/database";
-import { Author } from "./Author";
-import { BibliographicMaterial } from "./BibliographicMaterial";
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../database/database.js';
+import { Author } from './Author.js';
+import { BibliographicMaterial } from './BibliographicMaterial.js';
 
 export const AuthorMaterial = sequelize.define('authorMaterial', {
     id:{

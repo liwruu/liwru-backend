@@ -1,5 +1,5 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../database/database";
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../database/database.js';
 
 
 export const BibliographicMaterial = sequelize.define('bibliographicMaterial', {
@@ -20,5 +20,3 @@ export const BibliographicMaterial = sequelize.define('bibliographicMaterial', {
 },{
     timestamps: true,
 });
-
-bibliographicMaterial.hasMany()

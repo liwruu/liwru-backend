@@ -1,5 +1,6 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../database/database.js";
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../database/database.js';
+import { BibliographicMaterial } from './BibliographicMaterial.js';
 
 export const MaterialState = sequelize.define( 'materialState', {
     id:{
@@ -12,4 +13,14 @@ export const MaterialState = sequelize.define( 'materialState', {
     }
 },{
     timestamps: true,
+});
+
+MaterialState.hasMany(BibliographicMaterial, {
+    foreignKey: 'materialStateId',
+    sourceId: 'id',
+});
+
+BibliographicMaterial.belongsTo(MaterialState, {
+    foreignKey: 'materialStateId',
+    targetId: 'id',
 });
