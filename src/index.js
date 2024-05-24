@@ -9,7 +9,7 @@ import './models/MaterialType.js'
 
 async function main(){
     try{
-        await sequelize.sync({force: true}); //Crea las tablas si no existen
+        await sequelize.sync({force: true}); //Crea las tablas droppeandolas primero si existen
         app.listen(4000);
         console.log('Server is listening por 4000')
         console.log('Connection has been established successfully.');
@@ -19,4 +19,3 @@ async function main(){
 }
 
 main();
-
