@@ -4,6 +4,7 @@ import editorialRoutes from './routes/editorials.routes.js';
 import formatRoutes from './routes/formats.routes.js';
 import materialStateRoutes from './routes/materials.state.routes.js';
 import materialTypeRoutes from './routes/materials.type.routes.js';
+import bibliograpichMaterialRoutes from './routes/bibliographic.material.routes.js';
 
 const app = express();
 
@@ -15,5 +16,6 @@ app.use(editorialRoutes);
 app.use(formatRoutes);
 app.use(materialStateRoutes);
 app.use(materialTypeRoutes);
+app.use(bibliograpichMaterialRoutes);
 
 export default app;

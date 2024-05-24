@@ -14,4 +14,6 @@ export const Author = sequelize.define('author', {
     lastname:{
         type: DataTypes.STRING,
     }
+},{
+    timestamps: false,
 });
