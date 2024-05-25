@@ -13,7 +13,7 @@ export const getUsers = async (req, res) => {
 export const getUser = async (req, res) => {
     try{
         const user = await User.findOne({
-            where: { id: req.params.id }
+            where: { username: req.params.username }
         });
 
         if(!user) return res.status(500).json( { message: 'User does not exist' });
@@ -26,7 +26,7 @@ export const getUser = async (req, res) => {
 export const createUser = async (req, res) => {
     try{
         const newUser = await User.create({
-            id: req.body.id,
+            username: req.body.username,
             name: req.body.name,
             lastname: req.body.lastname,
             email: req.body.email,
@@ -41,11 +41,12 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     try{
         await User.update({
+            username: req.body.username,
             name: req.body.name,
             lastname: req.body.lastname,
             email: req.body.email,
         },{
-            where: { id: req.params.id }
+            where: { username: req.params.username }
         });
         res.json(User)
     } catch(error){
@@ -56,7 +57,7 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
     try{
         await User.destroy({
-            where: { id: req.params.id },
+            where: { username: req.params.username },
         });
         res.sendStatus(204);
     } catch(error){
@@ -66,10 +67,14 @@ export const deleteUser = async (req, res) => {
 
 export const getUserLoan = async (req, res) => {
     try{
-        const { id } = req.param
+        const user = await User.findOne({
+            where: { username: req.params.username },
+          });
+          
+        const usernameId = user? user.id : null;
         const loans = await Loan.findAll({
             where: {
-                userId: id,
+                userId: usernameId, 
             }
         });
         if(!loans) return res.status(500).json( { message: 'User has no loans' });
