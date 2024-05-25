@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../database.js";
+import { sequelize } from "../database/database.js";
 import { Loan } from "./Loan.js";
 
 export const User = sequelize.define('User', {
@@ -11,14 +11,13 @@ export const User = sequelize.define('User', {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    lastnmae: {
+    lastname: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
+      allowNull: false, 
     },
     password: {
       type: DataTypes.STRING,
@@ -29,14 +28,14 @@ export const User = sequelize.define('User', {
       allowNull: false,
       defaultValue: "USER",
     },
-    status: {
+    state: {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: "Active",
     },
 });
 
-User.hasMay(Loan, {
+User.hasMany(Loan, {
   foreignKey: 'userId',
   sourceKey: 'id',
 });

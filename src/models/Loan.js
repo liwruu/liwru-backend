@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../database.js";
+import { sequelize } from "../database/database.js";
 
 export const Loan = sequelize.define('Loan', {
     id: {
@@ -14,7 +14,7 @@ export const Loan = sequelize.define('Loan', {
     },
     returnDate: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW + 5,
+      defaultValue: DataTypes.NOW,
       allowNull: false,
     },
     loanExtension: {

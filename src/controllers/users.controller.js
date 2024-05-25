@@ -1,3 +1,4 @@
+import { Loan } from '../models/Loan.js';
 import { User } from '../models/User.js';
 
 export const getUsers = async (req, res) => {
@@ -62,3 +63,15 @@ export const deleteUser = async (req, res) => {
         return res.status(500).json( { message: error.message });
     };
 };
+
+export const getUserLoan = async (req, res) => {
+    try{
+        const loans = await Loan.findAll({
+            where: {userId: req.param.id}
+        });
+        if(!loans) return res.status(500).json( { message: 'User has no loans' });
+        res.json(loans)
+    } catch(error){
+        return res.status(500).json( { message: error.message });
+    };
+}

@@ -25,12 +25,8 @@ export const getLoan = async (req, res) => {
 export const createLoan = async (req, res) => {
     try{
         const newLoan = await Loan.create({
-            id,
-            loanDate,
-            returnDate,
-            loanExtension,
-            bibliographicMaterialId,
-            userId,
+            bibliographicMaterialId: req.body.bibliographicMaterialId,
+            userId: req.body.userId,
         });
         res.json(newLoan);
     } catch(error){
@@ -52,7 +48,7 @@ export const updateLoan = async (req, res) => {
     }
 };
 
-export const deleteUser = async (req, res) => {
+export const deleteLoan = async (req, res) => {
     try{
         await Loan.destroy({
             where: { id: req.params.id },

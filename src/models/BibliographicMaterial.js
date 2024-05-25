@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
-import { sequelize } from '../database/database.js';
-import { Loan } from './Loan.js'; 
+import { sequelize } from '../database/database.js'; 
+import { Loan } from './Loan.js';
 //import { MaterialType } from './MaterialType.js';
 
 
@@ -55,13 +55,13 @@ export const BibliographicMaterial = sequelize.define('bibliographicMaterial', {
     }*/
 });
 
+
 BibliographicMaterial.hasMany(Loan, {
     foreignKey: 'bibliographicMaterialId',
     sourceKey: 'id'
-});
-
-Loan.belongsTo(BibliographicMaterial, {
+  });
+  
+  Loan.belongsTo(BibliographicMaterial, {
     foreignKey: 'bibliographicMaterialId',
     targetId: 'id',
-})
-
+  })
