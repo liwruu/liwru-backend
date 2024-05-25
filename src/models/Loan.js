@@ -10,20 +10,21 @@ export const Loan = sequelize.define('Loan', {
     loanDate: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
-      allowNull: false,
     },
     returnDate: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
-      allowNull: false,
     },
     loanExtension: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
         allowNull: false,
     },
-    status: {
+    state: {
       type: DataTypes.CHAR,
       allowNull: false,
     },
+},{
+  timestamps: false,
 });
+

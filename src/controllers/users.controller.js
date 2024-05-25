@@ -66,11 +66,14 @@ export const deleteUser = async (req, res) => {
 
 export const getUserLoan = async (req, res) => {
     try{
+        const { id } = req.param
         const loans = await Loan.findAll({
-            where: {userId: req.param.id}
+            where: {
+                userId: id,
+            }
         });
         if(!loans) return res.status(500).json( { message: 'User has no loans' });
-        res.json(loans)
+        res.json(loans);
     } catch(error){
         return res.status(500).json( { message: error.message });
     };

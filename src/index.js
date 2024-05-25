@@ -3,7 +3,7 @@ import { sequelize } from './database/database.js';
 
 async function main(){
     try{
-        await sequelize.sync({force: false}); //Crea las tablas droppeandolas primero si existen
+        await sequelize.sync({ alter: true }); //Crea las tablas droppeandolas primero si existen
         app.listen(4000);
         console.log('Server is listening por 4000')
         console.log('Connection has been established successfully.');

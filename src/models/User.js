@@ -33,6 +33,8 @@ export const User = sequelize.define('User', {
       allowNull: false,
       defaultValue: "Active",
     },
+},{
+  timestamps: false,
 });
 
 User.hasMany(Loan, {
@@ -43,4 +45,4 @@ User.hasMany(Loan, {
 Loan.belongsTo(User, {
   foreignKey: 'userId',
   targetId: 'id',
-})
+});
