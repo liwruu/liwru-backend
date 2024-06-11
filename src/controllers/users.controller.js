@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { Loan } from '../models/Loan.js';
 import { User } from '../models/User.js';
 
@@ -24,17 +25,26 @@ export const getUser = async (req, res) => {
 };
 
 export const createUser = async (req, res) => {
-    try{
+    try {
+        const existingUser = await User.findOne({ where: { username: req.body.username } });
+
+        if (existingUser) {
+            return res.status(400).json({ message: 'Username already exists' });
+        }
+
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
         const newUser = await User.create({
             username: req.body.username,
             name: req.body.name,
             lastname: req.body.lastname,
             email: req.body.email,
-            password: req.body.password,
+            password: hashedPassword,
         });
-        res.json(newUser);
-    } catch(error){
-        return res.status(500).json( { message: error.message });
+
+        return res.status(201).json(newUser);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
     }
 };
 
@@ -82,4 +92,17 @@ export const getUserLoan = async (req, res) => {
     } catch(error){
         return res.status(500).json( { message: error.message });
     };
+}
+
+export const accVerify = async (res, req) => {
+    try{
+        const user = await User.findOne({
+            where: { username: req.params.username },
+        })
+        if(user.verified){
+            return res.status(400).json({ message: 'User is already verified' });
+        }
+    }catch(error){
+
+    }
 }
