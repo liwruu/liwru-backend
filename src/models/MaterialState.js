@@ -12,7 +12,7 @@ export const MaterialState = sequelize.define( 'materialState', {
         type: DataTypes.STRING,
     }
 },{
-    timestamps: true,
+    timestamps: false,
 });
 
 MaterialState.hasMany(BibliographicMaterial, {

@@ -13,7 +13,7 @@ export const Editorial = sequelize.define('editorial', {
         type: DataTypes.STRING,
     }
 },{
-    timestamps: true,
+    timestamps: false,
 });
 
 Editorial.hasMany(BibliographicMaterial, {

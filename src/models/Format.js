@@ -12,7 +12,7 @@ export const Format = sequelize.define('format', {
         type: DataTypes.STRING,
     }
 },{
-    timestamps: true,
+    timestamps: false,
 });
 
 Format.hasMany(BibliographicMaterial, {

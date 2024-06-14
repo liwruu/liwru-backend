@@ -10,8 +10,11 @@ export const Author = sequelize.define('author', {
     },
     name:{
         type: DataTypes.STRING,
+        allowNull: false,
     },
     lastname:{
         type: DataTypes.STRING,
     }
+},{
+    timestamps: false,
 });

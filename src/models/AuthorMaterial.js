@@ -11,7 +11,7 @@ export const AuthorMaterial = sequelize.define('authorMaterial', {
         allowNull: false,
     },
 },{
-    timestamps: true,
+    timestamps: false,
 });
 
 Author.belongsToMany(BibliographicMaterial, { through: AuthorMaterial });
