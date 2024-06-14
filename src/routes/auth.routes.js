@@ -1,17 +1,28 @@
-import { Router } from "express";
+// routes/auth.routes.js
+import express from 'express';
 import { 
-    loginUser,
-    logoutUser,
-} from '../controllers/auth.controller.js'
-import { isAuthenticated } from '../middlewares/auth.middleware.js';
+    loginUser, 
+    logoutUser 
+} from '../controllers/auth.controller.js';
 
-const router = Router();
+import { 
+    isAuthenticated, 
+    isAdmin, 
+    isUser 
+} from '../middlewares/auth.middleware.js';
 
-router.post('/login', loginUser); //Crear un autor
-router.post('/logout', logoutUser); //Actualizar un autor
+const router = express.Router();
 
-router.get('/protected', isAuthenticated, (req, res) => {
-    res.status(200).json({ message: 'You have access to this route' });
+router.post('/login', loginUser);
+router.post('/logout', logoutUser);
+
+// Rutas protegidas
+router.get('/admin', isAuthenticated, isAdmin, (req, res) => {
+    res.status(200).json({ message: 'Welcome to the admin dashboard' });
+});
+
+router.get('/user', isAuthenticated, isUser, (req, res) => {
+    res.status(200).json({ message: 'Welcome to the user dashboard' });
 });
 
 export default router;

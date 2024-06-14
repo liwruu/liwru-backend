@@ -1,10 +1,10 @@
 import session from 'express-session';
 
 const sessionConfig = session({
-    secret: 'your_secret_key', // Change this to a secure key
+    secret: 'mz3842m5a7',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Set to true if using HTTPS
+    cookie: { secure: false }
 });
 
 export default sessionConfig;
