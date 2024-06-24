@@ -1,4 +1,6 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { SECRET_KEY } from '../../config.js';
 import { User } from '../models/user.js';
 
 export const loginUser = async (req, res) => {
@@ -6,39 +8,44 @@ export const loginUser = async (req, res) => {
         const { username, password } = req.body;
 
         const user = await User.findOne({ where: { username } });
-
-        if (!user) {
-            return res.status(400).json({ message: 'Invalid username or password' });
-        }
-
+        if (!user) return res.status(400).json({ message: 'Invalid username or password.' });
+        
         const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) return res.status(400).json({ message: 'Invalid username or password.' });
 
-        if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid username or password' });
-        }
+        const token = jwt.sign(
+            { id: user.id, username: user.username },
+            SECRET_KEY,
+            { expiresIn: '1h' }
+        );
 
-        // Almacenar el ID y rol del usuario en la sesión
-        req.session.userId = user.id;
-        req.session.username = user.username;
-        req.session.role = user.role;
+        res.cookie('access_token', token,
+            {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'strict',
+                maxAge: 1000 * 60 * 60
+            }
+        );
 
         // Redirigir según el rol del usuario
-        if (user.role === 'admin') {
+        if (user.role == 'admin')
             return res.status(200).json({ message: 'Login successful', redirectUrl: '/admin' });
-        } else {
+        else
             return res.status(200).json({ message: 'Login successful', redirectUrl: '/user' });
-        }
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
 };
 
 export const logoutUser = (req, res) => {
-    req.session.destroy(err => {
-        if (err) {
-            return res.status(500).json({ message: 'Failed to logout' });
-        }
-        res.clearCookie('connect.sid');
-        return res.status(200).json({ message: 'Logout successful' });
-    });
+    res
+        .clearCookie('access_token')
+        .send('Logout successful.');
+};
+
+export const verifySession = (req, res) => {
+    const { user } = req.session;
+    if (!user) return res.send('Hello, World!');
+    res.send(`Hello, ${user.username}!`);
 };

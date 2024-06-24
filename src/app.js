@@ -1,5 +1,8 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import jwt from 'jsonwebtoken';
+import { SECRET_KEY } from '../config.js';
 import bibliographicMaterialRoutes from './routes/bibliographic.material.routes.js';
 import authorRoutes from './routes/authors.routes.js';
 import editorialRoutes from './routes/editorials.routes.js';
@@ -16,7 +19,19 @@ const app = express();
 // Middlewares
 app.use(express.json()); // Servidor interpreta .json y guarda en req.body
 app.use(cors());
-app.use(sessionConfig);
+app.use(cookieParser());
+
+app.use((req, res, next) => {
+    const token = req.cookies.access_token;
+    req.session = { user: null };
+
+    try {
+        const data = jwt.verify(token, SECRET_KEY);
+        req.session.user = data;
+    } catch {}
+
+    next();
+});
 
 // Rutas con prefijos
 app.use(bibliographicMaterialRoutes);

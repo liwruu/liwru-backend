@@ -1,19 +1,21 @@
 import express from 'express';
 import { 
     loginUser, 
-    logoutUser 
+    logoutUser,
+    verifySession
 } from '../controllers/auth.controller.js';
 
-import { 
+import {
     isAuthenticated, 
-    isAdmin, 
-    isUser 
+    isAdmin,
+    isUser
 } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
 router.post('/login', loginUser);
 router.post('/logout', logoutUser);
+router.get('/verifysession', verifySession);
 
 // Rutas protegidas
 router.get('/admin', isAuthenticated, isAdmin, (req, res) => {
