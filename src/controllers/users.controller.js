@@ -29,10 +29,11 @@ export const getUserSession = async (req, res) => {
         const user = await User.findOne({
             where: { username: req.session.user.username }
         });
-        if (!user) return res.status(500).json({ message: 'User does not exist' });
-        res.json(user);
+
+        if (!user) return res.status(500).json({ message: 'User does not exist' })
+        res.status(200).json(user);
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: error.message});
     }
 };
 
@@ -91,8 +92,8 @@ export const getUserLoan = async (req, res) => {
     try{
         const user = await User.findOne({
             where: { username: req.params.username },
-          });
-          
+        });
+        
         const usernameId = user? user.id : null;
         const loans = await Loan.findAll({
             where: {

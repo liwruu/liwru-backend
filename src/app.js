@@ -18,7 +18,10 @@ const app = express();
 
 // Middlewares
 app.use(express.json()); // Servidor interpreta .json y guarda en req.body
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173', // your frontend URL
+    credentials: true
+}));
 app.use(cookieParser());
 
 app.use((req, res, next) => {
