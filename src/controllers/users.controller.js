@@ -24,6 +24,22 @@ export const getUser = async (req, res) => {
     }
 };
 
+export const getUserSession = async (req, res) => {
+    try {
+        //const { user } = req.session
+        
+        const user = await User.findOne({
+            where: { username: req.session.user.username }
+        });
+
+        if (!user) return res.status(500).json({ message: 'User does not exist' });
+        res.json(user);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+
 export const createUser = async (req, res) => {
     try {
         const existingUser = await User.findOne({ where: { username: req.body.username } });
