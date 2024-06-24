@@ -121,4 +121,19 @@ export const accVerify = async (res, req) => {
     }catch(error){
 
     }
-}
+};
+
+export const newPassword = async (req, res) => {
+    try{
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+        await User.update({
+            password: hashedPassword
+        },{
+            where: { username: req.params.username }
+        });
+        res.send("Mensaje exitoso")
+    } catch(error){
+        return res.status(500).json( { message: error.message });
+    }
+};
