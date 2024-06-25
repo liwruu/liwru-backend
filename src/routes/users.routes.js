@@ -20,5 +20,6 @@ router.get('/users/:username', getUser);
 router.get('/user', getUserSession);
 router.get('/users/:username/loans', getUserLoan);
 router.put('/users/newpassword/:username',newPassword);
+router.get('/user', getUserSession);
 
 export default router;
