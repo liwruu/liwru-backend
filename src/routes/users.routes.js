@@ -6,6 +6,7 @@ import {
     getUsers,
     updateUser,
     getUserLoan,
+    newPassword,
     getUserSession
 } from '../controllers/users.controller.js';
 
@@ -16,7 +17,9 @@ router.post('/users', createUser);
 router.put('/users/:username', updateUser);
 router.delete('/users/:username', deleteUser);
 router.get('/users/:username', getUser);
+router.get('/user', getUserSession);
 router.get('/users/:username/loans', getUserLoan);
+router.put('/users/newpassword/:username',newPassword);
 router.get('/user', getUserSession);
 
 export default router;

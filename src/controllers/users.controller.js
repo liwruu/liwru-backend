@@ -26,16 +26,20 @@ export const getUser = async (req, res) => {
 
 export const getUserSession = async (req, res) => {
     try {
+        //const { user } = req.session
+        
+op
         const user = await User.findOne({
             where: { username: req.session.user.username }
         });
-
+      
         if (!user) return res.status(500).json({ message: 'User does not exist' })
         res.status(200).json(user);
     } catch (error) {
         return res.status(500).json({ message: error.message});
     }
 };
+
 
 export const createUser = async (req, res) => {
     try {
@@ -118,4 +122,19 @@ export const accVerify = async (res, req) => {
     }catch(error){
 
     }
-}
+};
+
+export const newPassword = async (req, res) => {
+    try{
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+        await User.update({
+            password: hashedPassword
+        },{
+            where: { username: req.params.username }
+        });
+        res.send("Mensaje exitoso")
+    } catch(error){
+        return res.status(500).json( { message: error.message });
+    }
+};
