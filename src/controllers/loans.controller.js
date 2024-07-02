@@ -94,7 +94,7 @@ export const extendLoan = async (req, res) => {
                 { where: { id } }
             );
 
-            return res.json({ message: 'Loan extended successfully.' });
+            return res.status(200).json({ message: 'Loan extended successfully.' });
         } else {
             return res.status(400).json({ message: 'Loan cannot be extended.' });
         }
