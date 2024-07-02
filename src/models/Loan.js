@@ -3,17 +3,19 @@ import { sequelize } from "../database/database.js";
 
 export const Loan = sequelize.define('Loan', {
     id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
     },
     loanDate: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
     },
     returnDate: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+        type: DataTypes.DATE,
+    },
+    returnExtensionDate: {
+        type: DataTypes.DATE,
     },
     loanExtension: {
         type: DataTypes.BOOLEAN,
@@ -21,10 +23,15 @@ export const Loan = sequelize.define('Loan', {
         allowNull: false,
     },
     state: {
-      type: DataTypes.CHAR,
-      allowNull: false,
+        type: DataTypes.ENUM('Prestado', 'Fuera de tiempo', 'A tiempo', 'Aplazado'),
+        defaultValue: 'Prestado',
+        allowNull: false,
     },
-},{
-  timestamps: false,
+}, {
+    timestamps: false,
+    hooks: {
+        beforeCreate: (loan) => {
+            loan.returnDate = new Date(loan.loanDate.getDate() + 5);
+        }
+    }
 });
-
