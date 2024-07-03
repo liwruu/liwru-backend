@@ -26,9 +26,6 @@ export const getUser = async (req, res) => {
 
 export const getUserSession = async (req, res) => {
     try {
-        //const { user } = req.session
-        
-op
         const user = await User.findOne({
             where: { username: req.session.user.username }
         });

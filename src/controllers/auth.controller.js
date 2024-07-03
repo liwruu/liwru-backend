@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { SECRET_KEY } from '../../config.js';
-import { User } from '../models/user.js';
+import { User } from '../models/User.js';
 
 export const loginUser = async (req, res) => {
     try {
@@ -28,7 +28,6 @@ export const loginUser = async (req, res) => {
             }
         );
 
-        // Redirigir según el rol del usuario
         if (user.role == 'admin')
             return res.status(200).json({ message: 'Login successful', redirectUrl: '/admin' });
         else
