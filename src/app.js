@@ -12,7 +12,6 @@ import materialTypeRoutes from './routes/materials.type.routes.js';
 import loanRoutes from './routes/loans.routes.js';
 import userRoutes from './routes/users.routes.js';
 import authRoutes from './routes/auth.routes.js';
-import sessionConfig from './config/session.config.js';
 
 const app = express();
 
