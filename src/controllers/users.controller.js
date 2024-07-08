@@ -63,18 +63,31 @@ export const createUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-    try{
-        await User.update({
-            username: req.body.username,
-            name: req.body.name,
-            lastname: req.body.lastname,
-            email: req.body.email,
-        },{
-            where: { username: req.params.username }
-        });
-        res.json(User)
-    } catch(error){
-        return res.status(500).json( { message: error.message });
+    try {
+        const { username } = req.params;
+        const { name, lastname, email, password, state, rol } = req.body;
+        const user = await User.findOne({ where: { username } });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.name = name !== undefined ? name : user.name;
+        user.lastname = lastname !== undefined ? lastname : user.lastname;
+        user.email = email !== undefined ? email : user.email;
+        user.state = state !== undefined ? state : user.state;
+        user.rol = rol !== undefined ? rol : user.rol;
+
+        if (password !== undefined) {
+            const salt = await bcrypt.genSalt(10);
+            user.password = await bcrypt.hash(password, salt);
+        }
+
+        await user.save();
+
+        res.json({ message: 'User updated successfully', user });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
     }
 };
 
