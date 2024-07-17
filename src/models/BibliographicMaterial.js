@@ -5,9 +5,10 @@ import { Author } from './Author.js';
 
 export const BibliographicMaterial = sequelize.define('bibliographicMaterial', {
     id:{
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
+        autoIncrement: true,
     },
     title:{
         type: DataTypes.STRING,
