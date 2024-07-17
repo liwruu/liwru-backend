@@ -12,7 +12,7 @@ import {
 const router = Router();
 
 router.get('/loans', getLoans);
-router.get('/loans/:userID',getUserLoans)
+router.get('/loans/:userId',getUserLoans)
 router.post('/loans', createLoan);
 router.put('/loans/:id', updateLoan);
 router.delete('/loans/:id', deleteLoan);

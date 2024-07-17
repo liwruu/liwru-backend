@@ -1,5 +1,6 @@
 import { where } from 'sequelize';
 import { Loan } from '../models/Loan.js';
+import { User } from '../models/User.js';
 
 export const getLoans = async (req, res) => {
     try {
@@ -10,16 +11,19 @@ export const getLoans = async (req, res) => {
     }
 };
 
-export const getUserLoans = async(req,res) =>{
+export const getUserLoans = async (req, res) => {
     try {
-        const loan = await Loan.findAll({
-            where:{userId : req.params.userId}
+        const { id } = req.params;
+        const loans = await Loan.findAll({
+            where: { userId: id } 
         });
-        res.json(loan)
+        res.json(loans);
     } catch (error) {
-        return res.status(500).json({message: error.message})
+        return res.status(500).json({ message: error.message });
     }
-}
+};
+
+
 
 export const getLoan = async (req, res) => {
     try {
