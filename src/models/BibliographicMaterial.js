@@ -1,6 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../database/database.js'; 
 import { Loan } from './Loan.js';
+import { Author } from './Author.js';
 //import { MaterialType } from './MaterialType.js';
 
 
@@ -65,3 +66,15 @@ BibliographicMaterial.hasMany(Loan, {
     foreignKey: 'bibliographicMaterialId',
     targetId: 'id',
 });
+
+
+BibliographicMaterial.hasMany(Author, {
+    foreignKey: 'bibliographicMaterialId',
+    sourceKey: 'id'
+})
+
+Author.belongsToMany(BibliographicMaterial, {
+    through: 'AuthorMaterial',
+    foreignKey: 'authorId',
+    otherKey: 'bibliographicMaterialId'  
+})
