@@ -23,7 +23,7 @@ export const Loan = sequelize.define('Loan', {
         allowNull: false,
     },
     state: {
-        type: DataTypes.ENUM('Prestado', 'Fuera de tiempo', 'A tiempo', 'Aplazado'),
+        type: DataTypes.STRING,
         defaultValue: 'Prestado',
         allowNull: false,
     },
