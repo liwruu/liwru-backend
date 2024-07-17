@@ -64,12 +64,12 @@ export const User = sequelize.define('User', {
       },
     },
     rol: {
-      type: DataTypes.ENUM("USER", "ADMIN"),
+      type: DataTypes.STRING,
       allowNull: false,
       defaultValue: "USER",
     },
     state: {
-      type: DataTypes.ENUM("Active", "Inactive"),
+      type: DataTypes.STRING,
       allowNull: false,
       defaultValue: "Active",
     },
