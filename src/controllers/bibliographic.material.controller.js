@@ -1,12 +1,16 @@
 // controllers/bibliographicMaterial.controller.js
+import multer from 'multer';
 import { BibliographicMaterial } from '../models/BibliographicMaterial.js';
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 export const getBibliographicMaterials = async (req, res) => {
     try {
         const bibliographicMaterials = await BibliographicMaterial.findAll({
             include: [{
                 model: Author,
-                through: { attributes: [] } // Excluir atributos de la tabla intermedia
+                through: { attributes: [] }
             }]
         });
         res.json(bibliographicMaterials);
@@ -21,7 +25,7 @@ export const getBibliographicMaterial = async (req, res) => {
             where: { id: req.params.id },
             include: [{
                 model: Author,
-                through: { attributes: [] } // Excluir atributos de la tabla intermedia
+                through: { attributes: [] }
             }]
         });
 
