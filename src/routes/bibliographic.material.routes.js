@@ -1,4 +1,5 @@
 import { Router } from "express";
+import multer from 'multer';
 import {
     getBibliographicMaterials,
     createBibliographicMaterial,
@@ -12,12 +13,10 @@ const router = Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-router.get('/material/bibliographic', getBibliographicMaterials); //Obtener todos los autores
-router.post('/material/bibliographic', upload.single('image'), createBibliographicMaterial); //Crear un autor
-router.put('/material/bibliographic/:id', updateBibliographicMaterial); //Actualizar un autor
-router.delete('/material/bibliographic/:id', deleteBibliographicMaterial); //Eliminar un autor
-router.get('/material/bibliographic/:id', getBibliographicMaterial); //Obtener un solo autor
+router.get('/material/bibliographic', getBibliographicMaterials); // Obtener todos los materiales
+router.post('/material/bibliographic', upload.single('image'), createBibliographicMaterial); // Crear un material
+router.put('/material/bibliographic/:id', upload.single('image'), updateBibliographicMaterial); // Actualizar un material
+router.delete('/material/bibliographic/:id', deleteBibliographicMaterial); // Eliminar un material
+router.get('/material/bibliographic/:id', getBibliographicMaterial); // Obtener un solo material
 
 export default router;
-
-

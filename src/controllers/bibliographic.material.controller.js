@@ -1,9 +1,5 @@
-// controllers/bibliographicMaterial.controller.js
-import multer from 'multer';
 import { BibliographicMaterial } from '../models/BibliographicMaterial.js';
-
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+import { Author } from '../models/Author.js';
 
 export const getBibliographicMaterials = async (req, res) => {
     try {
@@ -41,6 +37,10 @@ export const createBibliographicMaterial = async (req, res) => {
         const { title, isbn, pages, year, description, type, authorId, category } = req.body;
         const image = req.file;
 
+        if (!image) {
+            return res.status(400).json({ message: 'Image is required' });
+        }
+
         const newBibliographicMaterial = await BibliographicMaterial.create({
             title,
             isbn,
@@ -58,8 +58,6 @@ export const createBibliographicMaterial = async (req, res) => {
         return res.status(500).json({ message: error.message });
     }
 };
-
-
 
 export const updateBibliographicMaterial = async (req, res) => {
     try {
