@@ -102,3 +102,31 @@ export const extendLoan = async (req, res) => {
         return res.status(500).json({ message: error.message });
     }
 };
+
+export const createLoanRFID = async (req, res) => {
+    let uid1 = req.body.uid1;
+    let uid2 = req.body.uid2;
+
+    if (uid1 == '5baa7f6c') uid1 = '5';
+    else if (uid1 == '26c40f63') uid1 = 'EPP';
+    if (uid2 == '26c40f63') uid2 = 'EPP';
+    else if (uid2 == '5baa7f6c') uid2 = '5';
+
+    try{
+        const newLoanTry1 = await Loan.create({
+            bibliographicMaterialId: uid1,
+            userId: uid2,
+        });
+        res.json(newLoanTry1);
+    } catch {
+        try {
+            const newLoanTry2 = await Loan.create({
+                bibliographicMaterialId: uid2,
+                userId: uid1,
+            });
+            res.json(newLoanTry2);
+        } catch (error) {
+            res.send(error.message);
+        }
+    }
+};
