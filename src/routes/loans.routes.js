@@ -7,6 +7,7 @@ import {
     getLoans,
     getUserLoans,
     updateLoan,
+    createLoanRFID
 } from '../controllers/loans.controller.js';
 
 const router = Router();
@@ -18,5 +19,6 @@ router.put('/loans/:id', updateLoan);
 router.delete('/loans/:id', deleteLoan);
 router.get('/loans/:id', getLoan);
 router.put('/extend/loans/:id', extendLoan);
+router.post('/loans/createLoanRFID', createLoanRFID);
 
 export default router;
