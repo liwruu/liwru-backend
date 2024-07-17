@@ -43,25 +43,24 @@ export const BibliographicMaterial = sequelize.define('bibliographicMaterial', {
     timestamps: false,
 });
 
-
 BibliographicMaterial.hasMany(Loan, {
     foreignKey: 'bibliographicMaterialId',
     sourceKey: 'id'
 });
-  
-  Loan.belongsTo(BibliographicMaterial, {
+
+Loan.belongsTo(BibliographicMaterial, {
     foreignKey: 'bibliographicMaterialId',
     targetId: 'id',
 });
 
-
-BibliographicMaterial.hasMany(Author, {
+BibliographicMaterial.belongsToMany(Author, {
+    through: 'AuthorMaterial',
     foreignKey: 'bibliographicMaterialId',
-    sourceKey: 'id'
-})
+    otherKey: 'authorId'
+});
 
 Author.belongsToMany(BibliographicMaterial, {
     through: 'AuthorMaterial',
     foreignKey: 'authorId',
-    otherKey: 'bibliographicMaterialId'  
-})
+    otherKey: 'bibliographicMaterialId'
+});
