@@ -1,6 +1,67 @@
 import bcrypt from 'bcrypt';
+import nodemailer from 'nodemailer';
 import { Loan } from '../models/Loan.js';
 import { User } from '../models/User.js';
+
+const verificationCodes = {};
+
+export const sendEmail = async (req, res) => {
+  const email = req.body.email;
+  const user = await User.findOne({ where: { email } });
+
+  if (!user) {
+    return res.status(404).json({ message: "Email no registrado." });
+  }
+
+  // Genera un código de verificación de 6 dígitos
+  const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+  // Almacenar el código con un tiempo de expiración (15 minutos)
+  verificationCodes[email] = {
+    code: verificationCode,
+    expiry: Date.now() + 15 * 60 * 1000
+  };
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail', // Cambia esto si usas otro servicio
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
+    }
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: email,
+    subject: "Código de verificación para cambio de contraseña",
+    text: `Tu código de verificación es: ${verificationCode}`, // Asegúrate de que las comillas son correctas
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: "Código de verificación enviado" });
+  } catch (error) {
+    console.error('Error al enviar el correo:', error);
+    res.status(500).json({ error: "Error al enviar el código de verificación" });
+  }
+};
+
+export const validateVerificationCode = async (req, res) => {
+  const { email, verificationCode } = req.body;
+
+  if (verificationCodes[email] &&
+    verificationCodes[email].code === verificationCode &&
+    verificationCodes[email].expiry > Date.now()) {
+
+    // Marcar el código como verificado pero no eliminarlo aún
+    verificationCodes[email].verified = true;
+
+    res.status(200).json({ message: "Código de verificación válido" });
+  } else {
+    res.status(400).json({ error: "Código de verificación inválido o expirado" });
+  }
+};
+
 
 export const getUsers = async (req, res) => {
     try{

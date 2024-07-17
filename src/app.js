@@ -12,6 +12,9 @@ import materialTypeRoutes from './routes/materials.type.routes.js';
 import loanRoutes from './routes/loans.routes.js';
 import userRoutes from './routes/users.routes.js';
 import authRoutes from './routes/auth.routes.js';
+import dotenv from 'dotenv';
+
+dotenv.config(); // Cargar variables de entorno
 
 const app = express();
 

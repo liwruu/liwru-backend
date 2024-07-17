@@ -7,7 +7,9 @@ import {
     updateUser,
     getUserLoan,
     newPassword,
-    getUserSession
+    getUserSession,
+    sendEmail,
+    validateVerificationCode // Asegúrate de importar esta función
 } from '../controllers/users.controller.js';
 
 const router = Router();
@@ -18,7 +20,9 @@ router.put('/users/:username', updateUser);
 router.delete('/users/:username', deleteUser);
 router.get('/users/:username', getUser);
 router.get('/users/:username/loans', getUserLoan);
-router.put('/users/newpassword/:username',newPassword);
+router.put('/users/newpassword/:username', newPassword);
 router.get('/user', getUserSession);
+router.post('/send-email', sendEmail);
+router.post('/validate-verification-code', validateVerificationCode); // Añade esta ruta
 
 export default router;
