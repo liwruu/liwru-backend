@@ -34,21 +34,27 @@ export const getBibliographicMaterial = async (req, res) => {
 
 export const createBibliographicMaterial = async (req, res) => {
     try {
-        const { title, isbn, pages, year, description } = req.body;
-        const imageBuffer = req.file.buffer;
+        const { title, isbn, pages, year, description, type, authorId, category } = req.body;
+        const image = req.file;
+
         const newBibliographicMaterial = await BibliographicMaterial.create({
             title,
             isbn,
             pages,
             year,
             description,
-            image: imageBuffer
+            type,
+            authorId,
+            category,
+            image: image.buffer
         });
-        res.status(201).json(newBibliographicMaterial);
+
+        res.json(newBibliographicMaterial);
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
 };
+
 
 
 export const updateBibliographicMaterial = async (req, res) => {

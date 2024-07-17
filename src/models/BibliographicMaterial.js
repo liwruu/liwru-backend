@@ -29,6 +29,15 @@ export const BibliographicMaterial = sequelize.define('bibliographicMaterial', {
     },
     image: {
         type: DataTypes.BLOB,
+    },
+    type: {
+        type: DataTypes.STRING,
+    },
+    authorId: {
+        type: DataTypes.INTEGER,
+    },
+    category: {
+        type: DataTypes.STRING,
     }
 },{
     timestamps: false,
